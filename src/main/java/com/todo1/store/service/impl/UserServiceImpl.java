@@ -26,23 +26,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void insert(User user) {
+    public User insert(User user) {
 //        if(repository.existsById(user.getIdUser())){
 //            throw new ResponseStatusException(
 //                    HttpStatus.NOT_FOUND, ErrorCode.EXISTS.getReasonPhrase());
 //        }
         //TODO findByEmail
+
         String password = Encrypt.encrypt(user.getPassword().getBytes(StandardCharsets.UTF_8));
         user.setPassword(password);
-        repository.save(user);
+        return repository.save(user);
     }
 
     @Override
-    public void update(User user) {
+    public User update(User user) {
         if(!repository.existsById(user.getIdUser())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
         }
-        repository.save(user);
+        return repository.save(user);
     }
 }

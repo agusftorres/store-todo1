@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public interface CardService {
-    void insert(Card card) throws NoSuchAlgorithmException, BadPaddingException, NoSuchPaddingException, IllegalBlockSizeException, InvalidKeyException;
+    Card insert(Card card) throws NoSuchAlgorithmException, BadPaddingException, NoSuchPaddingException, IllegalBlockSizeException, InvalidKeyException;
     void delete(Long id);
     Card get(Long id) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException;
 }

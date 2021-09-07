@@ -21,7 +21,7 @@ public class CardServiceImpl implements CardService {
     CardRepository repository;
 
     @Override
-    public void insert(Card card){
+    public Card insert(Card card){
 //        if(repository.existsById(card.getIdCard())){
 //            throw new ResponseStatusException(
 //                    HttpStatus.NOT_FOUND, ErrorCode.EXISTS.getReasonPhrase());
@@ -31,7 +31,13 @@ public class CardServiceImpl implements CardService {
         card.setNumber(cardNumber);
         card.setCvv(cvv);
 
-        repository.save(card);
+        Card cardResult = repository.save(card);
+
+        String numberResult = Encrypt.decrypt(card.getNumber().getBytes(StandardCharsets.UTF_8));
+        cardResult.setNumber(numberResult.substring(12));
+        cardResult.setCvv(Encrypt.decrypt(card.getCvv().getBytes(StandardCharsets.UTF_8)));
+
+        return cardResult;
     }
 
     @Override
