@@ -27,6 +27,5 @@ public class Item {
     private Long idItem;
     private Integer quantity;
     @ManyToOne
-    @JoinColumn(name = "id_product")
     private Product product;
 }

@@ -26,10 +26,8 @@ public class Cart {
     private Long idCart;
 
     @OneToMany
-    @JoinColumn(name = "id_item")
     private List<Item> shoppingCart;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
     private User user;
 }

@@ -33,10 +33,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void insert(Product product) throws Exception {
-        if(repository.existsById(product.getIdProduct())){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ErrorCode.EXISTS.getReasonPhrase());
-        }
         repository.save(product);
     }
 

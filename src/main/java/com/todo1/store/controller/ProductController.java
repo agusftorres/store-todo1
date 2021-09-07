@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping( "/api/products")
+@RequestMapping( path = "/api/products")
 public class ProductController {
 
     @Autowired

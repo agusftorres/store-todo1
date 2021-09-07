@@ -32,7 +32,6 @@ public class User {
     private Integer rol;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_card")
     private List<Card> cards;
 
 }
