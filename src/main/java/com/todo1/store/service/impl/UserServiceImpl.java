@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void insert(User user) {
-        if(repository.existsById(user.getId())){
+        if(repository.existsById(user.getIdUser())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, ErrorCode.EXISTS.getReasonPhrase());
         }
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
-        if(!repository.existsById(user.getId())){
+        if(!repository.existsById(user.getIdUser())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
         }

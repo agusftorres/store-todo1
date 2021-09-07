@@ -25,14 +25,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private Long idUser;
     private String name;
     private String email;
     private String password;
     private Integer rol;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_card")
     private List<Card> cards;
 
 }

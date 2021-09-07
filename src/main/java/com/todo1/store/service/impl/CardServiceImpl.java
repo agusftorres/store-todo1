@@ -19,7 +19,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public void insert(Card card) {
-        if(repository.existsById(card.getId())){
+        if(repository.existsById(card.getIdCard())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, ErrorCode.EXISTS.getReasonPhrase());
         }

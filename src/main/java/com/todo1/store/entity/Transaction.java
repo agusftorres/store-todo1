@@ -29,19 +29,19 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private Long idTransaction;
     private LocalDateTime createdAt;
     private Long voucher;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_product")
     private List<Product> purchasedProducts;
 
     private BigDecimal amount;
     private String state;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_user")
     private User user;
 
     private String payMethod;

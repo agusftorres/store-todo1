@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void insert(Product product) throws Exception {
-        if(repository.existsById(product.getId())){
+        if(repository.existsById(product.getIdProduct())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, ErrorCode.EXISTS.getReasonPhrase());
         }
@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void update(Product product) {
-        if(!repository.existsById(product.getId())){
+        if(!repository.existsById(product.getIdProduct())){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
         }
