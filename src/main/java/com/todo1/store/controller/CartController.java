@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -18,24 +19,24 @@ public class CartController {
     CartService cartService;
 
     @PostMapping
-    public Cart addItem(Long idProduct, Integer quantity, Long idCart){
+    public Cart addItem(@RequestParam Long idProduct,@RequestParam Integer quantity,@RequestParam Long idCart, @RequestParam Long idUser){
         log.info(
                 "Se llama al servicio que agrega uno o varios items del mismo tipo al carrito, con id de producto: {}, cantidad: {}, id de carrito: {}",
                 idProduct, quantity,idCart
         );
-        Cart cartResult = cartService.addItem(idProduct,quantity,idCart);
+        Cart cartResult = cartService.addItem(idProduct,quantity,idCart, idUser);
 
         log.info("Resultado del servicio: {}", cartResult);
         return cartResult;
     }
 
     @DeleteMapping
-    public Cart deleteItem(Long idProduct, Integer quantity, Long idCart){
+    public Cart deleteItem(@RequestParam Long idProduct,@RequestParam Integer quantity,@RequestParam Long idCart, @RequestParam Long idUser){
         log.info(
-                "Se llama al servicio que elimina uno o varios items del mismo tipo al carrito, con id de producto: {}, cantidad: {}, id de carrito: {}",
-                idProduct, quantity,idCart
+                "Se llama al servicio que elimina uno o varios items del mismo tipo al carrito, con id de producto: {}, cantidad: {}, id de carrito: {}, id de usuario: {}",
+                idProduct, quantity,idCart, idUser
         );
-        Cart cartResult = cartService.deleteItem(idProduct, quantity,idCart);
+        Cart cartResult = cartService.deleteItem(idProduct, quantity,idCart, idUser);
 
         log.info("Resultado obtenido del servicio: {}", cartResult);
         return cartResult;

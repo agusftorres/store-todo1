@@ -6,6 +6,7 @@ import com.todo1.store.entity.Item;
 import com.todo1.store.exceptions.BusinessException;
 import com.todo1.store.repository.CartRepository;
 import com.todo1.store.repository.ProductRepository;
+import com.todo1.store.repository.UserRepository;
 import com.todo1.store.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,17 @@ public class CartServiceImpl implements CartService {
     @Autowired
     ProductRepository productRepository;
 
+    @Qualifier("userRepository")
+    @Autowired
+    UserRepository userRepository;
+
     @Override
-    public Cart addItem(Long idProduct, Integer quantity, Long idCart) {
+    public Cart addItem(Long idProduct, Integer quantity, Long idCart, Long idUser) {
         Cart cart;
 
         if(idCart == null){
            cart = Cart.builder()
-                   .shoppingCart(new ArrayList<Item>())
+                   .shoppingCart(new ArrayList<>())
                    .build();
            cart = cartRepository.save(cart);
         } else {
@@ -50,12 +55,13 @@ public class CartServiceImpl implements CartService {
         listItems.add(item);
 
         cart.setShoppingCart(listItems);
+        cart.setUser(userRepository.findById(idUser).get());
 
         return cartRepository.save(cart);
     }
 
     @Override
-    public Cart deleteItem(Long idItem, Integer quantity, Long idCart) {
+    public Cart deleteItem(Long idItem, Integer quantity, Long idCart, Long idUser) {
 
         if(idCart == null){
             log.error("No existe el carrito con id = ", idCart);
