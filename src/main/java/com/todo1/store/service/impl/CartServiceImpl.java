@@ -3,7 +3,6 @@ package com.todo1.store.service.impl;
 import com.todo1.store.ErrorCode;
 import com.todo1.store.entity.Cart;
 import com.todo1.store.entity.Item;
-import com.todo1.store.entity.Product;
 import com.todo1.store.exceptions.BusinessException;
 import com.todo1.store.repository.CartRepository;
 import com.todo1.store.repository.ProductRepository;
