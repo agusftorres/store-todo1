@@ -3,16 +3,17 @@ package com.todo1.store.service.impl;
 import com.todo1.store.Encrypt;
 import com.todo1.store.ErrorCode;
 import com.todo1.store.entity.Card;
+import com.todo1.store.exceptions.BusinessException;
 import com.todo1.store.repository.CardRepository;
 import com.todo1.store.service.CardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 @Service
 public class CardServiceImpl implements CardService {
 
@@ -43,8 +44,8 @@ public class CardServiceImpl implements CardService {
     @Override
     public void delete(Long id) {
         if(!repository.existsById(id)){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
+            log.error("No existe el producto con id: {} ", id);
+            throw new BusinessException(ErrorCode.CARD_NOT_EXISTS);
         }
         repository.deleteById(id);
     }

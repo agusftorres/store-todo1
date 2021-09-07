@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
 @Slf4j
 @RestController
 @RequestMapping( path = "/api/card")
@@ -26,12 +20,20 @@ public class CardController {
     CardService cardService;
 
     @GetMapping(path = "/{id}")
-    public Card getCard(@PathVariable Integer id) throws InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException {
-        return cardService.get(Long.valueOf(id));
+    public Card getCard(@PathVariable Long id){
+        log.info("Se llama al servicio para obtener una tarjeta de id: {}", id);
+        Card cardResult = cardService.get(id);
+
+        log.info("Resultado obtenido por el servicio: {}", cardResult);
+        return cardResult;
     }
 
     @PostMapping
-    public void insertCard(@RequestBody Card card) throws IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException {
-        cardService.insert(card);
+    public Card insertCard(@RequestBody Card card){
+        log.info("Se llama al servicio para insertar una tarjeta");
+        Card cardResult = cardService.insert(card);
+
+        log.info("Resultado obtenido por el servicio: {}", cardResult);
+        return cardResult;
     }
 }

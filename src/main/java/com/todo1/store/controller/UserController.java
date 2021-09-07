@@ -26,11 +26,19 @@ public class UserController {
 
     @PostMapping
     public User insertUser(@RequestBody User user){
-       return userService.insert(user);
+       log.info("Llamando al servicio de creación de usuario con email: {} y nombre: {}", user.getEmail(), user.getName());
+       User userResult = userService.insert(user);
+
+       log.info("Repuesta del servicio al crear usuario: {} ", userResult);
+       return userResult;
     }
 
     @PutMapping
     public User updateUser(@RequestBody User user){
-        return userService.update(user);
+        log.info("Llamando al servicio de actualización de usuario con id: {}", user.getIdUser());
+        User userResult = userService.update(user);
+
+        log.info("Repuesta del servicio al actualizar usuario: {} ", userResult);
+        return userResult;
     }
 }

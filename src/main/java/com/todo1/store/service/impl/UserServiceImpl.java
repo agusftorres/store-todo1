@@ -3,6 +3,7 @@ package com.todo1.store.service.impl;
 import com.todo1.store.Encrypt;
 import com.todo1.store.ErrorCode;
 import com.todo1.store.entity.User;
+import com.todo1.store.exceptions.BusinessException;
 import com.todo1.store.repository.UserRepository;
 import com.todo1.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(User user) {
         if(!repository.existsById(user.getIdUser())){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
+            throw new BusinessException(ErrorCode.USER_NOT_EXISTS);
         }
         return repository.save(user);
     }
