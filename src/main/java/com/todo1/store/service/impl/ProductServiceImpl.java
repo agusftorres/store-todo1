@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository repository;
 
     @Override
-    public List<Product> getAll() throws Exception {
+    public List<Product> getAll(){
         try{
             return repository.findAll();
         }catch (Exception e){

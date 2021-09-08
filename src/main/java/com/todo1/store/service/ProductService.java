@@ -7,7 +7,7 @@ import java.util.List;
 
 @Component
 public interface ProductService {
-    List<Product> getAll() throws Exception;
+    List<Product> getAll();
     Product insert(Product product);
     Product update(Product product);
     void delete(Long id);

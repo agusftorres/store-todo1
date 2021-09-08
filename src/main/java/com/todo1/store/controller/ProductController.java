@@ -19,7 +19,7 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts() throws Exception {
+    public List<Product> getAllProducts(){
         log.info("Llamando al serivicio para obtener la lista de productos");
         return productService.getAll();
     }
@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product insertProduct(@RequestBody Product product) throws Exception {
+    public Product insertProduct(@RequestBody Product product){
         log.info("Llamando al servicio para insertar un producto");
         Product productResult = productService.insert(product);
 
