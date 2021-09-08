@@ -5,6 +5,7 @@ import com.todo1.store.entity.Cart;
 import com.todo1.store.entity.Item;
 import com.todo1.store.exceptions.BusinessException;
 import com.todo1.store.repository.CartRepository;
+import com.todo1.store.repository.ItemRepository;
 import com.todo1.store.repository.ProductRepository;
 import com.todo1.store.repository.UserRepository;
 import com.todo1.store.service.CartService;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Slf4j
@@ -33,11 +35,15 @@ public class CartServiceImpl implements CartService {
     @Autowired
     UserRepository userRepository;
 
+    @Qualifier("itemRepository")
+    @Autowired
+    ItemRepository itemRepository;
+
     @Override
     public Cart addItem(Long idProduct, Integer quantity, Long idCart, Long idUser) {
         Cart cart;
 
-        if(idCart == null){
+        if(idCart == 0){
            cart = Cart.builder()
                    .shoppingCart(new ArrayList<>())
                    .build();
@@ -50,6 +56,8 @@ public class CartServiceImpl implements CartService {
                 .product(productRepository.getById(idProduct))
                 .quantity(quantity)
                 .build();
+
+        itemRepository.save(item);
 
         List<Item> listItems = cart.getShoppingCart();
         listItems.add(item);
