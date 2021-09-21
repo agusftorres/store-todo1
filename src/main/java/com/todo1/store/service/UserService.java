@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserService {
-    void insert(User user);
-    void update(User user);
+    User get(Long id);
+    User insert(User user);
+    User update(User user);
 }

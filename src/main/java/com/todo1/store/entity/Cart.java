@@ -1,6 +1,7 @@
 package com.todo1.store.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,14 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class Cart {
 
@@ -26,10 +28,8 @@ public class Cart {
     private Long idCart;
 
     @OneToMany
-    @JoinColumn(name = "id_item")
     private List<Item> shoppingCart;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user")
+    @OneToOne
     private User user;
 }

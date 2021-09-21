@@ -19,7 +19,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long idCard;
-    private String bank;
+    private String brand;
     private String number;
     private String cvv;
     private LocalDateTime goodThru;

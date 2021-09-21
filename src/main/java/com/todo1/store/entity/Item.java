@@ -10,9 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Data
 @Builder
@@ -27,6 +25,5 @@ public class Item {
     private Long idItem;
     private Integer quantity;
     @ManyToOne
-    @JoinColumn(name = "id_product")
     private Product product;
 }
