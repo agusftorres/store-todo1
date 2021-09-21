@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 @Data
@@ -29,6 +30,6 @@ public class Cart {
     @OneToMany
     private List<Item> shoppingCart;
 
-    @ManyToOne
+    @OneToOne
     private User user;
 }

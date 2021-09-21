@@ -19,24 +19,25 @@ public class CartController {
     CartService cartService;
 
     @PostMapping
-    public Cart addItem(@RequestParam Long idProduct,@RequestParam Integer quantity,@RequestParam Long idCart, @RequestParam Long idUser){
+    public Cart addItem(@RequestParam Long idProduct,@RequestParam Integer quantity, @RequestParam Long idUser){
         log.info(
                 "Se llama al servicio que agrega uno o varios items del mismo tipo al carrito, con id de producto: {}, cantidad: {}, id de carrito: {}",
-                idProduct, quantity,idCart
+                idProduct, quantity, idUser
         );
-        Cart cartResult = cartService.addItem(idProduct,quantity,idCart, idUser);
+        Cart cartResult = cartService.addItem(idProduct,quantity, idUser);
+
 
         log.info("Resultado del servicio: {}", cartResult);
         return cartResult;
     }
 
     @DeleteMapping
-    public Cart deleteItem(@RequestParam Long idProduct,@RequestParam Integer quantity,@RequestParam Long idCart, @RequestParam Long idUser){
+    public Cart deleteItem(@RequestParam Long idProduct,@RequestParam Integer quantity,@RequestParam Long idCart){
         log.info(
                 "Se llama al servicio que elimina uno o varios items del mismo tipo al carrito, con id de producto: {}, cantidad: {}, id de carrito: {}, id de usuario: {}",
-                idProduct, quantity,idCart, idUser
+                idProduct, quantity,idCart
         );
-        Cart cartResult = cartService.deleteItem(idProduct, quantity,idCart, idUser);
+        Cart cartResult = cartService.deleteItem(idProduct, quantity,idCart);
 
         log.info("Resultado obtenido del servicio: {}", cartResult);
         return cartResult;

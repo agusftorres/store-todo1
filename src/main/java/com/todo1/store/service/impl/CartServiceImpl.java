@@ -40,17 +40,8 @@ public class CartServiceImpl implements CartService {
     ItemRepository itemRepository;
 
     @Override
-    public Cart addItem(Long idProduct, Integer quantity, Long idCart, Long idUser) {
-        Cart cart;
-
-        if(idCart == 0){
-           cart = Cart.builder()
-                   .shoppingCart(new ArrayList<>())
-                   .build();
-           cart = cartRepository.save(cart);
-        } else {
-            cart = cartRepository.findById(idCart).get();
-        }
+    public Cart addItem(Long idProduct, Integer quantity, Long idUser) {
+        Cart cart = cartRepository.findCartByUserIdUser(idUser);
 
         Item item = Item.builder()
                 .product(productRepository.getById(idProduct))
@@ -63,24 +54,16 @@ public class CartServiceImpl implements CartService {
         listItems.add(item);
 
         cart.setShoppingCart(listItems);
-        cart.setUser(userRepository.findById(idUser).get());
 
         return cartRepository.save(cart);
     }
 
     @Override
-    public Cart deleteItem(Long idItem, Integer quantity, Long idCart, Long idUser) {
+    public Cart deleteItem(Long idItem, Integer quantity, Long idCart) {
 
-        if(idCart == null){
-            log.error("No existe el carrito con id = ", idCart);
-            throw new BusinessException(ErrorCode.CART_NOT_EXISTS);
-        }
         Cart cart = cartRepository.findById(idCart).get();
-
         List<Item> listItems = cart.getShoppingCart();
-
         Optional<Item> item = listItems.stream().filter(i -> i.getIdItem().equals(idItem)).findFirst();
-
         Integer quantityNew = deleteItemsFromList(item.get().getQuantity(), quantity);
 
         if(quantityNew == 0){

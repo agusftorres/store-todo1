@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface CartService {
-    Cart addItem(Long idProduct, Integer quantity, Long idCart, Long idUser);
-    Cart deleteItem(Long idItem, Integer quantity, Long idCart, Long idUser);
+    Cart addItem(Long idProduct, Integer quantity, Long idUser);
+    Cart deleteItem(Long idItem, Integer quantity, Long idCart);
 }
