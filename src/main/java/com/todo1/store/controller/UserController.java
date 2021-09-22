@@ -1,6 +1,8 @@
 package com.todo1.store.controller;
 
+import com.todo1.store.entity.Cart;
 import com.todo1.store.entity.User;
+import com.todo1.store.service.CartService;
 import com.todo1.store.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,16 +31,46 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    CartService cartService;
 
     @PostMapping("/login")
-    public User login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+    public User login(@RequestParam("email") String email, @RequestParam("password") String pwd) {
 
-        String token = getJWTToken(username);
-        User user = new User();
-        user.setName(username);
+        String token = getJWTToken(email);
+        User user = userService.findByEmail(email);
+        Cart cart =  Cart.builder()
+                .shoppingCart(new ArrayList<>())
+                .build();
+
+        cart = cartService.saveCart(cart);
+        user.setCart(cart);
         user.setToken(token);
-        return user;
 
+        return userService.update(user);
+    }
+
+    @GetMapping(path = "/{id}")
+    public User getUser(@PathVariable Long id){
+        return userService.get(id);
+    }
+
+    @PostMapping(path = "/signin")
+    public User insertUser(@RequestBody User user){
+       log.info("Llamando al servicio de creación de usuario con email: {} y nombre: {}", user.getEmail(), user.getName());
+       User userResult = userService.insert(user);
+
+       log.info("Repuesta del servicio al crear usuario: {} ", userResult);
+       return userResult;
+    }
+
+    @PutMapping
+    public User updateUser(@RequestBody User user){
+        log.info("Llamando al servicio de actualización de usuario con id: {}", user.getIdUser());
+        User userResult = userService.update(user);
+
+        log.info("Repuesta del servicio al actualizar usuario: {} ", userResult);
+        return userResult;
     }
 
     private String getJWTToken(String username) {
@@ -59,28 +92,5 @@ public class UserController {
                         secretKey.getBytes()).compact();
 
         return "Bearer " + token;
-    }
-
-    @GetMapping(path = "/{id}")
-    public User getUser(@PathVariable Long id){
-        return userService.get(id);
-    }
-
-    @PostMapping
-    public User insertUser(@RequestBody User user){
-       log.info("Llamando al servicio de creación de usuario con email: {} y nombre: {}", user.getEmail(), user.getName());
-       User userResult = userService.insert(user);
-
-       log.info("Repuesta del servicio al crear usuario: {} ", userResult);
-       return userResult;
-    }
-
-    @PutMapping
-    public User updateUser(@RequestBody User user){
-        log.info("Llamando al servicio de actualización de usuario con id: {}", user.getIdUser());
-        User userResult = userService.update(user);
-
-        log.info("Repuesta del servicio al actualizar usuario: {} ", userResult);
-        return userResult;
     }
 }

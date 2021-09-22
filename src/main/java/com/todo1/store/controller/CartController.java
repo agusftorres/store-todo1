@@ -26,7 +26,6 @@ public class CartController {
         );
         Cart cartResult = cartService.addItem(idProduct,quantity, idUser);
 
-
         log.info("Resultado del servicio: {}", cartResult);
         return cartResult;
     }

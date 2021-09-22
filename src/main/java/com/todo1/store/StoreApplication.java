@@ -29,6 +29,7 @@ public class StoreApplication {
                     .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/user/login").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/user/signin").permitAll()
                     .anyRequest().authenticated();
         }
     }

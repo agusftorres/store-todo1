@@ -36,7 +36,7 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Card> cards;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Cart cart;
 
 }
