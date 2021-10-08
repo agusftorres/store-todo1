@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface CardService {
-    void insert(Card card);
+    Card insert(Card card);
     void delete(Long id);
+    Card get(Long id);
 }

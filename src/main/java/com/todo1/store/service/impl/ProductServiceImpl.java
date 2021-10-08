@@ -2,6 +2,7 @@ package com.todo1.store.service.impl;
 
 import com.todo1.store.ErrorCode;
 import com.todo1.store.entity.Product;
+import com.todo1.store.exceptions.BusinessException;
 import com.todo1.store.repository.ProductRepository;
 import com.todo1.store.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,38 +23,36 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository repository;
 
     @Override
-    public List<Product> getAll() throws Exception {
+    public List<Product> getAll(){
         try{
             return repository.findAll();
         }catch (Exception e){
             log.info("Error buscando los productos");
-            throw new Exception(e.getMessage());
+            throw new BusinessException(ErrorCode.INTERNAL_ERROR);
         }
     }
 
     @Override
-    public void insert(Product product) throws Exception {
-        if(repository.existsById(product.getId())){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ErrorCode.EXISTS.getReasonPhrase());
-        }
+    public Product insert(Product product){
         repository.save(product);
+        return product;
     }
 
     @Override
-    public void update(Product product) {
-        if(!repository.existsById(product.getId())){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
+    public Product update(Product product) {
+        if(!repository.existsById(product.getIdProduct())){
+            log.error("No existe el producto con id: {} ", product.getIdProduct());
+            throw new BusinessException(ErrorCode.PRODUCT_NOT_EXISTS);
         }
         repository.save(product);
+        return product;
     }
 
     @Override
     public void delete(Long id) {
         if(!repository.existsById(id)){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
+            log.error("No existe el producto con id: {} ",id);
+            throw new BusinessException(ErrorCode.PRODUCT_NOT_EXISTS);
         }
         repository.deleteById(id);
     }
@@ -61,8 +60,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getById(Long id) {
         if(!repository.existsById(id)){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, ErrorCode.NOT_EXISTS.getReasonPhrase());
+            log.error("No existe el producto con id: {} ",id);
+            throw new BusinessException(ErrorCode.PRODUCT_NOT_EXISTS);
         }
         return repository.getById(id);
     }

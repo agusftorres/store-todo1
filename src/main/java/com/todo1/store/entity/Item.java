@@ -11,25 +11,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Cart {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long idCart;
-
-    @OneToMany
-    private List<Item> shoppingCart;
-
-    @OneToOne
-    private User user;
+    private Long idItem;
+    private Integer quantity;
+    @ManyToOne
+    private Product product;
 }
