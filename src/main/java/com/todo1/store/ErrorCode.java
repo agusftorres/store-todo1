@@ -2,6 +2,7 @@ package com.todo1.store;
 
 public enum ErrorCode {
 
+
     INTERNAL_ERROR(100, "Error interno del servidor"),
     NOT_EXISTS(101,"No existe el producto"),
     EXISTS(102, "Ya existe el producto");
